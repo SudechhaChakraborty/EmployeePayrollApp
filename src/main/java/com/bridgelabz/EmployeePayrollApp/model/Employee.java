@@ -1,38 +1,42 @@
 package com.bridgelabz.EmployeePayrollApp.model;
 
-import com.bridgelabz.EmployeePayrollApp.dto.EmployeeDTO;
-
 public class Employee {
-
-    private static long counter = 1;
 
     private Long id;
     private String name;
     private double salary;
 
-    public Employee(EmployeeDTO employeeDTO){
-        this.id = counter++;
-        this.name = employeeDTO.getName();
-        this.salary = employeeDTO.getSalary();
+    public Employee() {
+    }
+
+    public Employee(Long id, String name, double salary) {
+        this.id = id;
+        this.name = name;
+        this.salary = salary;
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public double getSalary() {
-        return salary;
+    public String getName() {
+        return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
+    public double getSalary() {
+        return salary;
+    }
+
     public void setSalary(double salary) {
         this.salary = salary;
     }
+
 }
