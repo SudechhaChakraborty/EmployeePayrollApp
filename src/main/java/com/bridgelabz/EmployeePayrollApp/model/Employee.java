@@ -1,47 +1,35 @@
 package com.bridgelabz.EmployeePayrollApp.model;
 
+import com.bridgelabz.EmployeePayrollApp.dto.EmployeeDTO;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
-@Entity
 public class Employee {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private static long counter = 1;
 
+    private Long id;
     private String name;
     private double salary;
 
-    public Employee() {
-    }
-
-    public Employee(String name, double salary) {
-        this.name = name;
-        this.salary = salary;
+    public Employee(EmployeeDTO employeeDTO){
+        this.id = counter++;
+        this.name = employeeDTO.getName();
+        this.salary = employeeDTO.getSalary();
     }
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public double getSalary() {
         return salary;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setSalary(double salary) {

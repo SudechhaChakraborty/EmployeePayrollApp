@@ -1,41 +1,53 @@
 package com.bridgelabz.EmployeePayrollApp.service;
 
+import com.bridgelabz.EmployeePayrollApp.dto.EmployeeDTO;
 import com.bridgelabz.EmployeePayrollApp.model.Employee;
-import com.bridgelabz.EmployeePayrollApp.repository.EmployeeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EmployeeService {
 
-    @Autowired
-    private EmployeeRepository employeeRepository;
+    private List<Employee> employeeList = new ArrayList<>();
 
     // Get all employees
-    public List<Employee> getAllEmployees() {
-        return employeeRepository.findAll();
+    public List<Employee> getAllEmployees(){
+        return employeeList;
     }
 
     // Get employee by id
-    public Optional<Employee> getEmployeeById(Long id) {
-        return employeeRepository.findById(id);
+    public Employee getEmployeeById(Long id){
+        return employeeList.stream()
+                .filter(emp -> emp.getId().equals(id))
+                .findFirst()
+                .orElse(null);
     }
 
-    // Add employee
-    public Employee addEmployee(Employee employee) {
-        return employeeRepository.save(employee);
+    // Create employee
+    public Employee addEmployee(EmployeeDTO employeeDTO){
+        Employee employee = new Employee(employeeDTO);
+        employeeList.add(employee);
+        return employee;
     }
 
     // Update employee
-    public Employee updateEmployee(Employee employee) {
-        return employeeRepository.save(employee);
+    public Employee updateEmployee(Long id, EmployeeDTO employeeDTO){
+
+        Employee employee = getEmployeeById(id);
+
+        if(employee != null){
+            employee.setName(employeeDTO.getName());
+            employee.setSalary(employeeDTO.getSalary());
+        }
+
+        return employee;
     }
 
     // Delete employee
-    public void deleteEmployee(Long id) {
-        employeeRepository.deleteById(id);
+    public void deleteEmployee(Long id){
+
+        employeeList.removeIf(emp -> emp.getId().equals(id));
     }
 }
